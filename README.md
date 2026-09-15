@@ -2,6 +2,8 @@
 
 A browser puzzle game by Sai Sugun. Record a route, rewind and use your echoes to hold switches while you collect crystals and reach the exit.
 
+[Play on Vercel](https://echo-shift-mu.vercel.app/)
+
 ## Controls
 
 | Control | Action |
