@@ -3,6 +3,14 @@ import assert from 'node:assert/strict';
 import { LEVELS } from '../levels.js';
 import { createState, step, echoPositions, isGateOpen } from '../engine.js';
 
+const solutions = [
+  { par: 12, actions: 'down down rewind right right right right down down up up right right'.split(' ') },
+  { par: 16, actions: 'down down down rewind right right down down right right right left up up right right right'.split(' ') },
+  { par: 24, actions: 'down down rewind right right right right down down down rewind right right right right down down down down up up up up right right right'.split(' ') },
+  { par: 28, actions: 'down down rewind down down down down right right right rewind down down down down up up up up right right right right right right down down down down right'.split(' ') },
+  { par: 42, actions: 'down down rewind right right right right down down down down rewind down down down down right right left left up up up up right right right right down down left left right right up up right right right down down down down down'.split(' ') },
+];
+
 const play = (state, actions) => actions.reduce(step, state);
 const progress = ({ message, ...state }) => state;
 function freeze(value) {
@@ -18,13 +26,13 @@ test('every chamber is rectangular and its supplied solution wins at its stated 
     assert.equal(level.grid.join('').split('S').length - 1, 1);
     assert.equal(level.grid.join('').split('X').length - 1, 1);
     let state = freeze(createState(index));
-    for (const action of level.solution) {
+    for (const action of solutions[index].actions) {
       const next = step(state, action);
       assert.ok(action === 'rewind' ? next.rewinds === state.rewinds + 1 : next.moves === state.moves + 1, `${level.id}: blocked ${action} at ${state.player.x},${state.player.y}`);
       state = freeze(next);
     }
     assert.equal(state.won, true, level.id);
-    assert.equal(state.moves, level.par, level.id);
+    assert.equal(state.moves, solutions[index].par, level.id);
     assert.ok(state.echoes.length >= (index >= 2 ? 2 : 1), level.id);
   }
 });
@@ -146,7 +154,7 @@ test('the exit needs every crystal and completion freezes play until reset', () 
   const premature = play(createState(), ['down', 'down', 'rewind', 'right', 'right', 'right', 'right', 'right', 'right']);
   assert.equal(premature.won, false);
   assert.match(premature.message, /missing/);
-  const won = freeze(play(createState(), LEVELS[0].solution));
+  const won = freeze(play(createState(), solutions[0].actions));
   for (const action of ['left', 'wait', 'rewind', 'unknown']) assert.deepEqual(step(won, action), won);
   assert.deepEqual(progress(step(won, 'reset')), progress(createState()));
 });
