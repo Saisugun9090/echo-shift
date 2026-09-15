@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#e9e6f2">
+  <meta name="description" content="A small puzzle through time. Record your moves, rewind, and work with your echoes to escape five strange chambers.">
+  <title>Echo Shift — a puzzle through time</title>
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <header class="masthead">
+    <a class="wordmark" href="./" aria-label="Echo Shift home"><span class="mark" aria-hidden="true">e<span>↶</span></span> ECHO SHIFT<span class="edition">A PUZZLE THROUGH TIME</span></a>
+    <button class="text-button" id="help">How to play <span aria-hidden="true">↗</span></button>
+  </header>
+
+  <main class="layout">
+    <section class="mission" aria-labelledby="headline">
+      <div class="eyebrow"><span class="live-dot"></span> A SMALL EXPERIMENT IN CAUSE & EFFECT</div>
+      <h1 id="headline">Your past.<br>Your <em>way out.</em></h1>
+      <p class="intro">One explorer. Two echoes.<br>Leave a trace of your moves, rewind,<br>then work together to escape.</p>
+      <button class="primary" id="start">Enter the chamber <span aria-hidden="true">↗</span></button>
+      <div id="objective" class="objective" hidden>
+        <span class="eyebrow">YOUR OBJECTIVE</span>
+        <p>Collect the crystals.<br>Reach the exit.</p>
+        <span class="quiet">Leave an echo on a switch to open its gate.</span>
+      </div>
+
+      <div class="chapter-heading"><h2>THE CHAMBERS</h2><span id="progress-count">0 / 5</span></div>
+      <nav id="levels" class="level-list" aria-label="Choose a chamber"></nav>
+      <div class="mission-footer"><span class="orbit-icon" aria-hidden="true">◎</span><p>No timer. No rush.<br><strong>Just you, a little earlier.</strong></p></div>
+    </section>
+
+    <section class="game-shell" aria-label="Echo Shift game">
+      <div class="game-topline">
+        <div><span class="eyebrow" id="chamber-number">CHAMBER 01</span><h2 id="chamber-title">First contact</h2></div>
+        <div class="stats"><div><span class="eyebrow">MOVES</span><strong id="moves">00</strong></div><div><span class="eyebrow">CRYSTALS</span><strong id="crystals">0 / 1</strong></div></div>
+      </div>
+
+      <div class="stage" id="stage">
+        <div class="stage-orbit" aria-hidden="true"></div>
+        <span class="stage-coordinates" aria-hidden="true">TEMPORAL FIELD / ACTIVE</span>
+        <canvas id="board" width="1000" height="620" tabindex="0" role="img" aria-label="Isometric puzzle board. Use arrow keys or WASD to move; Space to cast an echo; period to wait; R to reset."></canvas>
+        <div class="stage-tag" aria-hidden="true"><span class="tag-line"></span><span>YOU ARE HERE<br><b>FOR NOW.</b></span></div>
+        <div class="victory" id="victory" hidden>
+          <span class="eyebrow" id="victory-label">CHAMBER CLEAR</span>
+          <h3 id="victory-title">A little help from yourself.</h3>
+          <p id="victory-detail"></p>
+          <button class="primary" id="next">Next chamber <span aria-hidden="true">→</span></button>
+          <button class="text-button" id="replay">Play this chamber again</button>
+        </div>
+      </div>
+
+      <div class="legend" aria-label="Board symbols"><span><i class="legend-you"></i>You</span><span><i class="legend-echo"></i>Your echo</span><span><i class="legend-core"></i>Crystal</span><span><i class="legend-switch">A</i>Switch</span><span><i class="legend-exit"></i>Exit</span></div>
+      <div class="time-strip"><div class="time-label"><span class="eyebrow">YOUR RECORDING</span><strong id="tick">STEP 00</strong></div><div id="timeline" class="timeline" aria-label="Recorded moves"></div><span id="echo-count">0 / 2 ECHOES</span></div>
+      <div class="game-controls">
+        <div class="action-controls"><button id="rewind" class="echo-button" title="Record this route and return to the start">↶ <span>Cast echo</span><kbd>SPACE</kbd></button><button id="wait" class="subtle-button" title="Stay still for one step">Wait <kbd>·</kbd></button><button id="reset" class="icon-button" aria-label="Reset chamber" title="Reset chamber (R)">↺</button></div>
+        <div class="direction-pad" aria-label="Movement controls"><button data-move="up" aria-label="Move up">↑</button><button data-move="left" aria-label="Move left">←</button><button data-move="down" aria-label="Move down">↓</button><button data-move="right" aria-label="Move right">→</button></div>
+      </div>
+      <div class="status-line"><p id="status" role="status" aria-live="polite">Enter the chamber, then follow your curiosity.</p><button class="text-button" id="hint">Need a hint?</button></div>
+      <p class="hint" id="hint-text" hidden></p>
+    </section>
+  </main>
+
+  <footer class="footer"><span>AN ORIGINAL BROWSER GAME BY SAI SUGUN</span><span>ARROWS / WASD TO MOVE <span class="footer-dot">·</span> SPACE TO CAST AN ECHO</span><a href="https://github.com/drsai9090/echo-shift" target="_blank" rel="noopener noreferrer">Behind the game ↗</a></footer>
+
+  <dialog id="help-dialog" aria-labelledby="help-title">
+    <form method="dialog"><button class="dialog-close" aria-label="Close instructions">×</button></form>
+    <span class="eyebrow">A NOTE FROM YOUR FUTURE SELF</span><h2 id="help-title">You can be in<br>two places at once.</h2>
+    <ol><li><strong>Move onto a switch.</strong><span>Use arrow keys, WASD or the arrow buttons. You can also tap a neighbouring tile.</span></li><li><strong>Cast an echo.</strong><span>Press Space. Your route is saved and you return to the start. Crystals reset for this new run.</span></li><li><strong>Work with your past.</strong><span>Every move advances your echoes one step. They stay at the end of their route, keeping switches pressed. Wait with the period key when you need to sync up.</span></li><li><strong>Find the exit.</strong><span>Collect every crystal in this run. A switch opens gates with the same letter. Two echoes fit in a chamber; a third replaces the oldest.</span></li></ol>
+    <p class="quiet">Echoes move first on each step. A gate must be held when you enter. Echoes replay freely through gates. Blocked moves do not advance time. R resets the chamber. Your best scores are saved on this device when storage is available.</p>
+    <form method="dialog"><button class="primary">Got it. Let’s play <span aria-hidden="true">→</span></button></form>
+  </dialog>
+  <script type="module" src="./game.js"></script>
+</body>
+</html>
