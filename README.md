@@ -31,4 +31,4 @@ Open [localhost:4180](http://127.0.0.1:4180). Set `PORT` to use another port.
 
 ## Deployment
 
-Deploy `index.html`, `style.css`, `game.js`, `engine.js`, `levels.js` and `icon.svg` as static files on Vercel. No build command or runtime server is needed. GitHub Actions also tests changes and updates the [Pages mirror](https://drsai9090.github.io/echo-shift/) from `main`.
+Deploy `index.html`, `style.css`, `game.js`, `engine.js`, `levels.js` and `icon.svg` as static files on Vercel. No build command or runtime server is needed. GitHub Actions also tests changes and updates the [Pages mirror](https://saisugun9090.github.io/echo-shift/) from `main`.
