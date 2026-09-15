@@ -3,6 +3,12 @@ import { readFile } from 'node:fs/promises';
 
 const files = new Map([
   ['/index.html', 'text/html; charset=utf-8'],
+  ['/echo.html', 'text/html; charset=utf-8'],
+  ['/arcade.css', 'text/css; charset=utf-8'],
+  ['/snake.html', 'text/html; charset=utf-8'],
+  ['/snake.css', 'text/css; charset=utf-8'],
+  ['/snake.js', 'text/javascript; charset=utf-8'],
+  ['/snake-engine.js', 'text/javascript; charset=utf-8'],
   ['/style.css', 'text/css; charset=utf-8'],
   ['/game.js', 'text/javascript; charset=utf-8'],
   ['/engine.js', 'text/javascript; charset=utf-8'],
@@ -52,5 +58,5 @@ createServer(async (request, response) => {
     response.writeHead(missing ? 404 : 500).end(missing ? 'Not found' : 'Server error');
   }
 }).listen(port, '127.0.0.1', () => {
-  console.log(`Echo Shift: http://127.0.0.1:${port}`);
+  console.log(`Sugun Games: http://127.0.0.1:${port}`);
 });
