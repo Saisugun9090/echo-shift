@@ -16,31 +16,21 @@ try {
 
 let state = createState();
 let previous = state;
-let started = false;
 let changedAt = 0;
 let width = 0, height = 0, tileW = 0, tileH = 0, originX = 0, originY = 0;
 let frame = 0;
 const colors = { coral: '#ff806e', mint: '#9de2dd', gold: '#f8d48d', switch: '#c5aae8' };
 const pad = number => String(number).padStart(2, '0');
 
-function begin() {
-  started = true;
-  document.body.classList.add('playing');
-  $('start').hidden = true;
-  $('objective').hidden = false;
-}
-
 function choose(index) {
   state = createState(index);
   previous = state;
-  $('hint-text').hidden = true;
-  $('hint').setAttribute('aria-expanded', 'false');
+  $('hint').open = false;
   update();
   resize();
 }
 
 function act(action) {
-  begin();
   previous = state;
   state = step(state, action);
   changedAt = performance.now();
@@ -64,7 +54,7 @@ function update() {
   $('crystals').textContent = `${state.collected.length} / ${total}`;
   $('tick').textContent = `STEP ${pad(state.tick)}`;
   $('echo-count').textContent = `${state.echoes.length} / 2 ECHOES`;
-  $('status').textContent = started ? state.message || level.subtitle : 'Enter the chamber, then follow your curiosity.';
+  $('status').textContent = state.message;
   $('hint-text').textContent = level.hint;
   $('progress-count').textContent = `${Object.keys(best).length} / ${LEVELS.length}`;
   $('levels').replaceChildren(...LEVELS.map((item, index) => {
@@ -78,16 +68,9 @@ function update() {
       span.textContent = text;
       button.append(span);
     }
-    button.addEventListener('click', () => { begin(); choose(index); canvas.focus({ preventScroll: true }); });
+    button.addEventListener('click', () => { choose(index); canvas.focus({ preventScroll: true }); });
     return button;
   }));
-  $('timeline').replaceChildren(...Array.from({ length: 32 }, (_, index) => {
-    const mark = document.createElement('i');
-    const current = Math.min(state.tick, 31);
-    mark.className = index === current ? 'current' : index < current ? 'filled' : '';
-    return mark;
-  }));
-  $('timeline').setAttribute('aria-label', `${state.tick} recorded steps in this loop`);
   $('rewind').disabled = state.won || !state.route.some(p => p.x !== state.route[0].x || p.y !== state.route[0].y);
   $('wait').disabled = state.won;
   document.querySelectorAll('[data-move]').forEach(button => { button.disabled = state.won; });
@@ -95,7 +78,7 @@ function update() {
   if (state.won) {
     const last = state.levelIndex === LEVELS.length - 1;
     $('victory-label').textContent = `CHAMBER ${pad(state.levelIndex + 1)} CLEAR`;
-    $('victory-title').textContent = last ? 'Time well spent.' : 'A little help from yourself.';
+    $('victory-title').textContent = last ? 'Final chamber complete' : 'Chamber complete';
     $('victory-detail').textContent = `${state.moves} moves · ${state.rewinds} ${state.rewinds === 1 ? 'echo' : 'echoes'} cast · best ${best[level.id]}`;
     $('next').textContent = last ? 'Back to the beginning ↶' : 'Next chamber →';
   }
@@ -279,26 +262,19 @@ function requestDraw() {
   });
 }
 
-$('start').addEventListener('click', () => { begin(); update(); canvas.focus({ preventScroll: true }); });
 $('rewind').addEventListener('click', () => act('rewind'));
 $('wait').addEventListener('click', () => act('wait'));
 $('reset').addEventListener('click', () => act('reset'));
-$('replay').addEventListener('click', () => { act('reset'); canvas.focus({ preventScroll: true }); });
+$('replay').addEventListener('click', () => act('reset'));
 $('next').addEventListener('click', () => { choose((state.levelIndex + 1) % LEVELS.length); canvas.focus({ preventScroll: true }); });
 document.querySelectorAll('[data-move]').forEach(button => button.addEventListener('click', () => act(button.dataset.move)));
 $('help').addEventListener('click', () => $('help-dialog').showModal());
-$('hint').setAttribute('aria-expanded', 'false');
-$('hint').setAttribute('aria-controls', 'hint-text');
-$('hint').addEventListener('click', () => {
-  $('hint-text').hidden = !$('hint-text').hidden;
-  $('hint').setAttribute('aria-expanded', String(!$('hint-text').hidden));
-});
 
 document.addEventListener('keydown', event => {
   if ($('help-dialog').open || event.altKey || event.ctrlKey || event.metaKey || /INPUT|TEXTAREA|SELECT/.test(event.target.tagName)) return;
   const action = { ArrowUp: 'up', ArrowDown: 'down', ArrowLeft: 'left', ArrowRight: 'right', w: 'up', s: 'down', a: 'left', d: 'right', ' ': 'rewind', '.': 'wait', r: 'reset' }[event.key.length === 1 ? event.key.toLowerCase() : event.key];
   // Keep Space available for activating focused buttons, including the native help dialog trigger.
-  if (!action || (event.key === ' ' && event.target.closest('button,a'))) return;
+  if (!action || (event.key === ' ' && event.target.closest('button,a,summary'))) return;
   event.preventDefault();
   if (!event.repeat || action !== 'rewind') act(action);
 });

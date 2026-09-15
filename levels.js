@@ -2,7 +2,6 @@ export const LEVELS = [
   {
     id: 'first-light',
     title: 'First Light',
-    subtitle: 'Leave a light on for yourself.',
     hint: 'Stand on A and rewind. Your echo will return to A and hold gate a open.',
     grid: [
       '#########',
@@ -12,13 +11,10 @@ export const LEVELS = [
       '#########',
       '#########',
     ],
-    par: 12,
-    solution: 'down down rewind right right right right down down up up right right'.split(' '),
   },
   {
     id: 'afterimage',
     title: 'Afterimage',
-    subtitle: 'Find what the previous loop left behind.',
     hint: 'Park an echo on A. Collect both crystals in your final run, then find the northern gate.',
     grid: [
       '##########',
@@ -29,13 +25,10 @@ export const LEVELS = [
       '#.....####',
       '##########',
     ],
-    par: 16,
-    solution: 'down down down rewind right right down down right right right left up up right right right'.split(' '),
   },
   {
     id: 'double-exposure',
     title: 'Double Exposure',
-    subtitle: 'One echo opens the way for another.',
     hint: 'Record A first. Use that echo to reach B, record again, then collect the crystal before leaving.',
     grid: [
       '##########',
@@ -46,13 +39,10 @@ export const LEVELS = [
       '#####o####',
       '##########',
     ],
-    par: 24,
-    solution: 'down down rewind right right right right down down down rewind right right right right down down down down up up up up right right right'.split(' '),
   },
   {
     id: 'crossed-paths',
     title: 'Crossed Paths',
-    subtitle: 'Two memories. One complete journey.',
     hint: 'Leave echoes on A and B. Rewinding restores the crystals, so visit the lower-left crystal again on your final run.',
     grid: [
       '##########',
@@ -64,13 +54,10 @@ export const LEVELS = [
       '#.....#..#',
       '##########',
     ],
-    par: 28,
-    solution: 'down down rewind down down down down right right right rewind down down down down up up up up right right right right right right down down down down right'.split(' '),
   },
   {
     id: 'event-horizon',
     title: 'Event Horizon',
-    subtitle: 'Bring every piece of yourself home.',
     hint: 'Record A, then reach B through gate a and record B. On the final run, explore all three crystal branches before the eastern exit.',
     grid: [
       '##########',
@@ -82,7 +69,5 @@ export const LEVELS = [
       '########X#',
       '##########',
     ],
-    par: 42,
-    solution: 'down down rewind right right right right down down down down rewind down down down down right right left left up up up up right right right right down down left left right right up up right right right down down down down down'.split(' '),
   },
 ];
