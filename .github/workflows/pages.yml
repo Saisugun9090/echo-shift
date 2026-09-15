@@ -30,6 +30,9 @@ jobs:
         run: |
           mkdir _site
           cp index.html arcade.css echo.html style.css game.js engine.js levels.js icon.svg snake.html snake.css snake.js snake-engine.js _site/
+          cp bricks.html bricks.css bricks.js bricks-engine.js race.html race.css race.js race-engine.js race-network.js _site/
+          mkdir _site/vendor
+          cp vendor/peerjs.min.js vendor/peerjs.LICENSE _site/vendor/
       - uses: actions/upload-pages-artifact@v3
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         with:
