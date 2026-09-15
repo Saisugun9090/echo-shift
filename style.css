@@ -3,8 +3,6 @@
 :root{--paper:#e9e6f2;--ink:#282238;--muted:#766e88;--line:#cec7dd;--coral:#ff806e;--mint:#9de2dd;--gold:#f8d48d;--white:#faf8ff;font-family:'DM Sans','Segoe UI',sans-serif;color:var(--ink);background:var(--paper);font-synthesis:none}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 85% 2%,#dcd4ee 0,transparent 48%),var(--paper)}button,a{-webkit-tap-highlight-color:transparent}button{font:inherit;cursor:pointer;color:inherit}button:disabled{opacity:.45;cursor:not-allowed}button:focus-visible,a:focus-visible,canvas:focus-visible{outline:3px solid #a04b72;outline-offset:5px}button{touch-action:manipulation}a{color:inherit;text-decoration:none}button span{pointer-events:none}[hidden]{display:none!important}
 .masthead{max-width:1512px;margin:auto;padding:28px 50px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}
 .wordmark{display:flex;align-items:center;gap:12px;font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:700;letter-spacing:1px}
-.mark{font-size:35px;line-height:32px;font-weight:700;position:relative;width:32px}
-.mark span{position:absolute;font-size:24px;left:9px;top:-5px;color:#8777a4}
 .text-button{border:0;background:none;padding:7px 0;font-size:12px;font-weight:600}
 .text-button span{margin-left:15px}
 .text-button:hover{color:#8c4366}

@@ -4,63 +4,67 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#e9e6f2">
-  <meta name="description" content="Record moves, rewind and use your echoes to solve five puzzle chambers.">
-  <title>Echo Shift</title>
+  <meta name="description" content="Play Echo Shift and Pocket Snake at Sugun Games. Free browser games with keyboard and touch controls.">
+  <title>Sugun Games</title>
   <link rel="icon" href="./icon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="./arcade.css">
 </head>
 <body>
-  <header class="masthead">
-    <a class="wordmark" href="./" aria-label="Echo Shift home"><span class="mark" aria-hidden="true">e<span>↶</span></span> ECHO SHIFT</a>
-    <button class="text-button" id="help">How to play <span aria-hidden="true">↗</span></button>
+  <a class="skip-link" href="#games">Skip to games</a>
+  <header class="header">
+    <a class="brand" href="./index.html" aria-label="Sugun Games home"><svg viewBox="0 0 40 32" aria-hidden="true"><path d="M10 5h20c5 0 8 18 5 21-3 3-9-4-9-4H14s-6 7-9 4C2 23 5 5 10 5Z" fill="currentColor"/><path d="M12 11v9m-4-4.5h8" stroke="#e9e6f2" stroke-width="2.5"/><circle cx="26" cy="12" r="2" fill="#ff806e"/><circle cx="30" cy="18" r="2" fill="#9de2dd"/></svg><span>SUGUN GAMES</span></a>
+    <a class="source" href="https://github.com/Saisugun9090/echo-shift" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
   </header>
-
-  <main class="layout">
-    <section class="mission" aria-labelledby="headline">
-      <h1 id="headline">Echo Shift</h1>
-      <p class="intro">Record a route to hold switches. Rewind, collect every crystal and reach the exit.</p>
-
-      <div class="chapter-heading"><h2>THE CHAMBERS</h2><span id="progress-count">0 / 5</span></div>
-      <nav id="levels" class="level-list" aria-label="Choose a chamber"></nav>
+  <main id="games">
+    <section class="intro" aria-labelledby="title">
+      <div><p class="eyebrow">THE COLLECTION / 02 GAMES</p><h1 id="title">Choose your game<span>.</span></h1></div>
+      <p class="intro-note">Free to play. No downloads.<br> Made for keyboard &amp; touch.</p>
     </section>
-
-    <section class="game-shell" aria-label="Echo Shift game">
-      <div class="game-topline">
-        <div><span class="eyebrow" id="chamber-number">CHAMBER 01</span><h2 id="chamber-title">First contact</h2></div>
-        <div class="stats"><div><span class="eyebrow">MOVES</span><strong id="moves">00</strong></div><div><span class="eyebrow">CRYSTALS</span><strong id="crystals">0 / 1</strong></div></div>
-      </div>
-
-      <div class="stage" id="stage">
-        <canvas id="board" width="1000" height="620" tabindex="0" role="img" aria-label="Isometric puzzle board. Use arrow keys or WASD to move; Space to cast an echo; period to wait; R to reset."></canvas>
-        <div class="victory" id="victory" hidden>
-          <span class="eyebrow" id="victory-label">CHAMBER CLEAR</span>
-          <h3 id="victory-title">Chamber complete</h3>
-          <p id="victory-detail"></p>
-          <button class="primary" id="next">Next chamber <span aria-hidden="true">→</span></button>
-          <button class="text-button" id="replay">Play this chamber again</button>
+    <div class="games">
+      <a class="cartridge echo-card" href="./echo.html" aria-labelledby="echo-title echo-play">
+        <div class="art echo-art" aria-hidden="true">
+          <span class="genre">PUZZLE</span><span class="art-mark">↶</span>
+          <svg class="echo-world" viewBox="0 0 600 340">
+            <defs><pattern id="tiles" width="64" height="64" patternUnits="userSpaceOnUse"><rect width="61" height="61" rx="3" fill="#a397c5"/><rect x="4" y="4" width="53" height="53" rx="2" fill="#b6a9d5"/></pattern><filter id="glow"><feGaussianBlur stdDeviation="8"/></filter></defs>
+            <ellipse cx="300" cy="280" rx="190" ry="24" fill="#221b3b" opacity=".38"/>
+            <path d="M88 175 300 69 512 175 512 198 300 305 88 198Z" fill="#65557f"/>
+            <path d="M300 281 512 175 512 198 300 305Z" fill="#817094"/>
+            <g transform="translate(300 69) matrix(.707 .354 -.707 .354 0 0)"><rect width="300" height="300" rx="3" fill="url(#tiles)"/><path d="M30 223H155V100H226" fill="none" stroke="#9de2dd" stroke-width="5" stroke-dasharray="9 9"/><circle cx="226" cy="100" r="23" fill="#74618f" stroke="#9de2dd" stroke-width="5"/></g>
+            <ellipse cx="212" cy="176" rx="30" ry="12" fill="#9de2dd" opacity=".3" filter="url(#glow)"/>
+            <g transform="translate(212 170)" fill="#9de2dd" opacity=".8"><ellipse cy="4" rx="17" ry="7" opacity=".3"/><rect x="-11" y="-36" width="22" height="35" rx="8"/><circle cy="-45" r="16"/><rect x="-10" y="-50" width="20" height="9" rx="4" fill="#436470"/><rect x="3" y="-49" width="5" height="2" fill="#f5ffed"/></g>
+            <g transform="translate(303 216)" fill="#ff947e"><ellipse cy="4" rx="18" ry="7" fill="#3f315e" opacity=".4"/><rect x="-12" y="-36" width="24" height="35" rx="8"/><circle cy="-45" r="17"/><rect x="-11" y="-50" width="22" height="9" rx="4" fill="#513c58"/><rect x="3" y="-49" width="5" height="2" fill="#fff6e5"/></g>
+            <path d="m371 139 12-22 12 22-12 21Z" fill="#f8d48d"/><path d="m383 117 12 22-12 21Z" fill="#d9aa68"/>
+            <g fill="none" stroke="#9de2dd" stroke-width="3"><ellipse cx="392" cy="199" rx="23" ry="12"/><ellipse cx="392" cy="199" rx="14" ry="7"/></g>
+          </svg>
         </div>
-      </div>
-
-      <div class="legend" aria-label="Board symbols"><span><i class="legend-you"></i>You</span><span><i class="legend-echo"></i>Your echo</span><span><i class="legend-core"></i>Crystal</span><span><i class="legend-switch">A</i>Switch</span><span><i class="legend-exit"></i>Exit</span></div>
-      <div class="time-strip"><div class="time-label"><span class="eyebrow">CURRENT LOOP</span><strong id="tick">STEP 00</strong></div><span id="echo-count">0 / 2 ECHOES</span></div>
-      <div class="game-controls">
-        <div class="action-controls"><button id="rewind" class="echo-button" title="Record this route and return to the start">↶ <span>Cast echo</span><kbd>SPACE</kbd></button><button id="wait" class="subtle-button" title="Stay still for one step">Wait <kbd>·</kbd></button><button id="reset" class="icon-button" aria-label="Reset chamber" title="Reset chamber (R)">↺</button></div>
-        <div class="direction-pad" aria-label="Movement controls"><button data-move="up" aria-label="Move up">↑</button><button data-move="left" aria-label="Move left">←</button><button data-move="down" aria-label="Move down">↓</button><button data-move="right" aria-label="Move right">→</button></div>
-      </div>
-      <p id="status" role="status" aria-live="polite">Collect every crystal, then reach the exit.</p>
-      <details class="hint" id="hint"><summary>Hint</summary><p id="hint-text"></p></details>
-    </section>
+        <div class="game-info"><div class="game-meta"><span>5 CHAMBERS</span><span>TAKE YOUR TIME</span></div><h2 id="echo-title">Echo Shift</h2><p>Record a route. Rewind. Solve the puzzle with your echoes.</p><div class="play-row"><span id="echo-play">Play Echo Shift</span><span class="play-arrow" aria-hidden="true">↗</span></div></div>
+      </a>
+      <a class="cartridge snake-card" href="./snake.html" aria-labelledby="snake-title snake-play">
+        <div class="art snake-art" aria-hidden="true">
+          <span class="genre">ARCADE</span><span class="new-tag">NEW</span>
+          <svg class="handheld" viewBox="0 0 600 340">
+            <defs><pattern id="lcd-grid" width="12" height="12" patternUnits="userSpaceOnUse"><path d="M12 0H0V12" fill="none" stroke="#899d70" stroke-opacity=".3" stroke-width=".8"/></pattern></defs>
+            <ellipse cx="300" cy="308" rx="153" ry="14" fill="#a28665" opacity=".2"/>
+            <g transform="rotate(-7 300 170)">
+              <rect x="172" y="18" width="258" height="288" rx="29" fill="#282638"/>
+              <rect x="165" y="9" width="258" height="288" rx="29" fill="#4c485d" stroke="#686373" stroke-width="2"/>
+              <rect x="184" y="32" width="220" height="183" rx="12" fill="#2d2b3d"/>
+              <rect x="197" y="44" width="194" height="156" rx="3" fill="#c5d59a"/>
+              <rect x="197" y="44" width="194" height="156" fill="url(#lcd-grid)"/>
+              <path d="M222 164h36v-36h36V92h48" fill="none" stroke="#30453a" stroke-width="13" stroke-linejoin="miter"/>
+              <rect x="335" y="85" width="15" height="15" fill="#30453a"/><rect x="344" y="88" width="3" height="3" fill="#c5d59a"/>
+              <path d="M354 146h12v12h-12Zm5-5h4v5h-4Z" fill="#30453a"/>
+              <g fill="#262536"><rect x="218" y="224" width="19" height="51" rx="4"/><rect x="202" y="240" width="51" height="19" rx="4"/></g>
+              <circle cx="351" cy="254" r="17" fill="#302b3d"/><circle cx="351" cy="250" r="17" fill="#ef8a77"/><circle cx="383" cy="236" r="12" fill="#302b3d"/><circle cx="383" cy="232" r="12" fill="#d1b59b"/>
+              <path d="M277 275h23m-23 6h23" stroke="#777082" stroke-width="3" stroke-linecap="round"/>
+            </g>
+          </svg>
+        </div>
+        <div class="game-info"><div class="game-meta"><span>THE CLASSIC</span><span>BEAT YOUR BEST</span></div><h2 id="snake-title">Pocket Snake</h2><p>Eat, grow, repeat. Stay off the walls and watch your tail.</p><div class="play-row"><span id="snake-play">Play Pocket Snake</span><span class="play-arrow" aria-hidden="true">↗</span></div></div>
+      </a>
+    </div>
+    <p class="save-note">Your best scores stay on this device when browser storage is available.</p>
   </main>
-
-  <footer class="footer"><span>SAI SUGUN</span><span>ARROWS / WASD TO MOVE <span class="footer-dot">·</span> SPACE TO CAST AN ECHO</span><a href="https://github.com/Saisugun9090/echo-shift" target="_blank" rel="noopener noreferrer">Source ↗</a></footer>
-
-  <dialog id="help-dialog" aria-labelledby="help-title">
-    <form method="dialog"><button class="dialog-close" aria-label="Close instructions">×</button></form>
-    <h2 id="help-title">How to play</h2>
-    <ol><li><strong>Move onto a switch.</strong><span>Use arrow keys, WASD or the arrow buttons. You can also tap a neighbouring tile.</span></li><li><strong>Cast an echo.</strong><span>Press Space. Your route is saved and you return to the start. Crystals reset for this new run.</span></li><li><strong>Work with your past.</strong><span>Every move advances your echoes one step. They stay at the end of their route, keeping switches pressed. Wait with the period key when you need to sync up.</span></li><li><strong>Find the exit.</strong><span>Collect every crystal in this run. A switch opens gates with the same letter. Two echoes fit in a chamber; a third replaces the oldest.</span></li></ol>
-    <p class="quiet">Echoes move first on each step. A gate must be held when you enter. Echoes replay freely through gates. Blocked moves do not advance time. R resets the chamber. Your best scores are saved on this device when storage is available.</p>
-    <form method="dialog"><button class="primary">Play <span aria-hidden="true">→</span></button></form>
-  </dialog>
-  <script type="module" src="./game.js"></script>
+  <footer><span>MADE BY SAI SUGUN</span><span>2 GAMES / FREE TO PLAY</span></footer>
 </body>
 </html>

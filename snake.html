@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#302d43">
+  <meta name="description" content="Play Pocket Snake on Sugun Games. Eat apples and avoid the walls and your tail.">
+  <title>Pocket Snake · Sugun Games</title>
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./snake.css">
+</head>
+<body>
+  <header class="masthead"><a class="wordmark" href="./index.html" aria-label="All games"><span class="brand-mark" aria-hidden="true">s<span>g</span></span> SUGUN GAMES</a><a class="back-link" href="./index.html"><span aria-hidden="true">←</span> All games</a></header>
+  <main class="layout">
+    <section class="intro" aria-labelledby="title">
+      <span class="label">ARCADE · ONE PLAYER</span>
+      <h1 id="title">Pocket<br><span>Snake</span></h1>
+      <p>Eat apples. Avoid walls and your tail. The snake speeds up every three apples.</p>
+      <div class="instructions"><h2>Controls</h2><dl><div><dt>Steer</dt><dd>Arrow keys or WASD</dd></div><div><dt>Pause</dt><dd>Space or P</dd></div><div><dt>On your phone</dt><dd>Swipe the screen or use the pad</dd></div></dl></div>
+      <span class="device-note">Your best stays on this device.</span>
+    </section>
+    <section class="handheld" aria-label="Pocket Snake game">
+      <div class="device-top"><span class="device-logo">SUGUN <b>pocket</b></span><span class="power"><i aria-hidden="true"></i> POWER</span></div>
+      <div class="screen-bezel">
+        <div class="screen">
+          <div class="scoreboard"><div><span>SCORE</span><strong id="score">000</strong></div><span class="screen-name" aria-hidden="true">SNAKE</span><div><span>BEST</span><strong id="best">000</strong></div></div>
+          <div class="board-wrap">
+            <canvas id="board" width="600" height="600" tabindex="0" role="img" aria-label="Snake board. Use arrow keys or WASD to steer, Space or P to pause." aria-describedby="status"></canvas>
+            <div class="overlay" id="overlay"><span id="overlay-label">READY</span><h2 id="overlay-title">Pocket Snake</h2><p id="overlay-detail">Eat apples. Avoid walls and your tail.</p><button id="play">Start game <span aria-hidden="true">→</span></button></div>
+          </div>
+          <p id="status" class="screen-status" role="status" aria-live="polite">Press Start game to play.</p>
+        </div>
+      </div>
+      <div class="controls">
+        <div class="direction-pad" aria-label="Direction controls"><button data-direction="up" aria-label="Move up">▲</button><button data-direction="left" aria-label="Move left">◀</button><span aria-hidden="true"></span><button data-direction="right" aria-label="Move right">▶</button><button data-direction="down" aria-label="Move down">▼</button></div>
+        <div class="action-controls"><div><button id="pause" class="round-button" aria-label="Pause game" disabled><span aria-hidden="true">Ⅱ</span></button><span id="pause-label">PAUSE</span></div><div><button id="restart" class="round-button restart-button" aria-label="Restart game" disabled><span aria-hidden="true">↻</span></button><span>RESTART</span></div></div>
+      </div>
+      <div class="device-bottom"><span>20 × 20 · ONE PLAYER</span><div class="speaker" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div></div>
+    </section>
+  </main>
+  <footer><span>SUGUN GAMES</span><a href="https://github.com/Saisugun9090/echo-shift" target="_blank" rel="noopener noreferrer">Source ↗</a></footer>
+  <script type="module" src="./snake.js"></script>
+</body>
+</html>
