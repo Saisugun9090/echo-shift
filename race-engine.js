@@ -1,5 +1,6 @@
 export const TRACK = { width: 1280, height: 800, cx: 640, cy: 400, rx: 465, ry: 260, halfWidth: 58 };
-export const COLORS = ['#ff705b', '#72daca', '#ffd568', '#b7a2ff'];
+export const MAX_PLAYERS = 6;
+export const COLORS = ['#ff705b', '#72daca', '#ffd568', '#b7a2ff', '#62b8ff', '#ff9cda'];
 export const LAPS = 3;
 export const TAU = Math.PI * 2;
 const clamp = (value, low, high) => Math.max(low, Math.min(high, value));
@@ -19,11 +20,11 @@ export function trackPosition(x, y) {
 }
 
 export function createRace(drivers) {
-  if (!Array.isArray(drivers) || drivers.length < 1 || drivers.length > 4 || new Set(drivers.map(driver => driver.id)).size !== drivers.length || drivers.some(driver => typeof driver.id !== 'string' || driver.id.length > 100 || !validName(driver.name))) throw new Error('Choose one to four drivers with valid names.');
+  if (!Array.isArray(drivers) || drivers.length < 1 || drivers.length > MAX_PLAYERS || new Set(drivers.map(driver => driver?.id)).size !== drivers.length || drivers.some(driver => !driver || typeof driver.id !== 'string' || driver.id.length > 100 || !validName(driver.name))) throw new Error(`Choose one to ${MAX_PLAYERS} drivers with valid names.`);
   return {
     phase: 'countdown', time: -3,
     cars: drivers.map((driver, index) => {
-      const angle = -.09 - Math.floor(index / 2) * .1;
+      const angle = -.09 - Math.floor(index / 2) * .2;
       return { id: driver.id, name: driver.name.trim(), color: index, ...trackPoint(angle, index % 2 === 0 ? -19 : 19), angle: Math.PI / 2, speed: 0, laps: 0, nextCheckpoint: 1, gates: 0, lastAngle: (angle + TAU) % TAU, finishedAt: null, connected: true };
     }),
   };
@@ -77,5 +78,5 @@ export function rankCars(state) {
 }
 
 export function validSnapshot(state) {
-  return !!state && ['countdown', 'racing', 'finished'].includes(state.phase) && Number.isFinite(state.time) && state.time >= -3 && state.time < 86400 && Array.isArray(state.cars) && state.cars.length >= 1 && state.cars.length <= 4 && new Set(state.cars.map(car => car?.id)).size === state.cars.length && state.cars.every(car => car && typeof car.id === 'string' && car.id.length <= 100 && validName(car.name) && Number.isInteger(car.color) && car.color >= 0 && car.color < 4 && Number.isFinite(car.x) && car.x >= 0 && car.x <= TRACK.width && Number.isFinite(car.y) && car.y >= 0 && car.y <= TRACK.height && Number.isFinite(car.angle) && Math.abs(car.angle) <= Math.PI && Number.isFinite(car.speed) && car.speed >= 0 && car.speed <= 335 && Number.isInteger(car.laps) && car.laps >= 0 && car.laps <= LAPS && Number.isInteger(car.gates) && car.gates >= 0 && car.gates <= LAPS * 4 && Number.isInteger(car.nextCheckpoint) && car.nextCheckpoint >= 0 && car.nextCheckpoint <= 3 && Number.isFinite(car.lastAngle) && car.lastAngle >= 0 && car.lastAngle <= TAU && typeof car.connected === 'boolean' && (car.finishedAt === null || Number.isFinite(car.finishedAt) && car.finishedAt >= 0 && car.finishedAt <= state.time));
+  return !!state && ['countdown', 'racing', 'finished'].includes(state.phase) && Number.isFinite(state.time) && state.time >= -3 && state.time < 86400 && Array.isArray(state.cars) && state.cars.length >= 1 && state.cars.length <= MAX_PLAYERS && new Set(state.cars.map(car => car?.id)).size === state.cars.length && state.cars.every(car => car && typeof car.id === 'string' && car.id.length <= 100 && validName(car.name) && Number.isInteger(car.color) && car.color >= 0 && car.color < MAX_PLAYERS && Number.isFinite(car.x) && car.x >= 0 && car.x <= TRACK.width && Number.isFinite(car.y) && car.y >= 0 && car.y <= TRACK.height && Number.isFinite(car.angle) && Math.abs(car.angle) <= Math.PI && Number.isFinite(car.speed) && car.speed >= 0 && car.speed <= 335 && Number.isInteger(car.laps) && car.laps >= 0 && car.laps <= LAPS && Number.isInteger(car.gates) && car.gates >= 0 && car.gates <= LAPS * 4 && Number.isInteger(car.nextCheckpoint) && car.nextCheckpoint >= 0 && car.nextCheckpoint <= 3 && Number.isFinite(car.lastAngle) && car.lastAngle >= 0 && car.lastAngle <= TAU && typeof car.connected === 'boolean' && (car.finishedAt === null || Number.isFinite(car.finishedAt) && car.finishedAt >= 0 && car.finishedAt <= state.time));
 }

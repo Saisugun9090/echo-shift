@@ -4,18 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#171b23">
-  <meta name="description" content="Race three laps with friends in Formula Club. Create a room, share the code, or drive a solo time trial at Sugun Games.">
+  <meta name="description" content="Race three laps with 2–6 players in Formula Club. Create a room, share the code, or drive a solo time trial at Sugun Games.">
   <title>Formula Club · Sugun Games</title>
   <link rel="icon" href="./icon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="./race.css">
+  <link rel="stylesheet" href="./race.css?v=party-20260916">
 </head>
 <body>
   <header class="masthead"><a class="wordmark" href="./index.html"><span class="brand-mark" aria-hidden="true">sg</span> SUGUN GAMES</a><a class="back-link" href="./index.html">← All games</a></header>
   <main>
-    <section class="race-heading"><div><p class="eyebrow">RACING / 1–4 DRIVERS</p><h1>Formula <em>Club.</em></h1></div><span class="track-badge"><i aria-hidden="true"></i> SUGUN PARK <b>03 LAPS</b></span></section>
+    <section class="race-heading"><div><p class="eyebrow">RACING / 1–6 DRIVERS</p><h1>Formula <em>Club.</em></h1></div><span class="track-badge"><i aria-hidden="true"></i> SUGUN PARK <b>03 LAPS</b></span></section>
     <div class="race-layout">
       <section class="paddock" aria-labelledby="paddock-title">
-        <div class="panel-heading"><span class="eyebrow">THE PADDOCK</span><span class="number">01—04</span></div>
+        <div class="panel-heading"><span class="eyebrow">THE PADDOCK</span><span class="number">01—06</span></div>
         <div id="setup">
           <h2 id="paddock-title">Lobby</h2>
           <label for="driver-name">Driver name</label><input id="driver-name" maxlength="18" value="Driver" autocomplete="nickname" spellcheck="false">
@@ -23,7 +23,7 @@
           <div class="separator"><span>or race your friends</span></div>
           <button id="create-room" class="button primary">Create a room <span>↗</span></button>
           <form id="join-form"><label for="join-code">Have a code?</label><div class="join-row"><input id="join-code" maxlength="6" placeholder="ABC234" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-describedby="room-note"><button class="button" type="submit">Join</button></div></form>
-          <p class="small-note" id="room-note">2–4 friends. Share a code and keep the host tab open. Direct connections may be blocked on some networks.</p>
+          <p class="small-note" id="room-note">2–6 players, including the host. Share a code and keep the host tab open. Direct connections may be blocked on some networks.</p>
         </div>
         <div id="room-panel" hidden>
           <h2>Drivers</h2>
@@ -47,6 +47,6 @@
   </main>
   <footer><span>FORMULA CLUB / SUGUN GAMES</span><a href="https://github.com/Saisugun9090/sugun-games" target="_blank" rel="noopener noreferrer">Source ↗</a></footer>
   <script src="./vendor/peerjs.min.js"></script>
-  <script type="module" src="./race.js"></script>
+  <script type="module" src="./race.js?v=party-20260916"></script>
 </body>
 </html>
