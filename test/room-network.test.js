@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { EventEmitter } from 'node:events';
 import { createRoom, validCode, validName } from '../room-network.js';
+import { createClassic, classicView, validView as validClassicView, validAction as validClassicAction, applyClassic, tickClassic } from '../doodle-classic-engine.js';
 
 class Connection extends EventEmitter {
   constructor(id) { super(); this.peer = id; this.open = true; this.sent = []; }
@@ -129,4 +130,39 @@ test('old rejected connections cannot close replacements and a closed lobby cann
   assert.ok(roster.some(player => player.id === 'F'));
   room.close(); room.start({ for: 'host', task: 'Closed' });
   assert.equal(starts, 0);
+});
+
+test('Classic rooms keep the word private while streaming drawings and unique correct counts to six players', async t => {
+  const getPeer = fakePeer(t);
+  let roster, state, ownView, now = 1000;
+  const room = createRoom({ game: 'doodle-classic', host: true, name: 'Host', validState: validClassicView, validAction: validClassicAction,
+    onReady: () => {}, onRoster: value => { roster = value; }, onStart: value => { ownView = value; }, onState: () => {}, onError: assert.fail,
+    onAction: (id, action) => { if (applyClassic(state, id, action, now)) room.broadcastState(id => classicView(state, id)); } });
+  t.after(() => room.close());
+  await Promise.resolve();
+  assert.equal(getPeer().id, `sugun-doodle-classic-v1-${room.code}`);
+  const guests = Array.from({ length: 5 }, (_, index) => {
+    const connection = new Connection(`Artist${index + 2}`);
+    getPeer().emit('connection', connection); connection.emit('data', { type: 'hello', name: connection.peer }); return connection;
+  });
+  state = createClassic(roster, 'classic-network-test', 30, now, () => .1);
+  room.start(id => classicView(state, id));
+  const word = ownView.choices[0];
+  assert.equal(ownView.choices.length, 3);
+  for (const guest of guests) assert.deepEqual(guest.sent.at(-1).state.choices, []);
+  room.sendAction({ type: 'choose', gameId: state.gameId, turn: 0, word });
+  room.sendAction({ type: 'drawing', gameId: state.gameId, turn: 0, revision: 1, strokes: [{ color: '#252b3b', width: 9, points: [[30, 40], [50, 60]] }] });
+  for (const guest of guests) {
+    assert.equal(guest.sent.at(-1).state.word, null);
+    assert.equal(guest.sent.at(-1).state.strokes[0].points.length, 2);
+    guest.emit('data', { type: 'action', sequence: 1, action: { type: 'guess', gameId: state.gameId, turn: 0, text: word } });
+    guest.emit('data', { type: 'action', sequence: 2, action: { type: 'guess', gameId: state.gameId, turn: 0, text: word } });
+  }
+  const pending = guests[4].sent.at(-1).state;
+  assert.equal(pending.correctCount, 5); assert.equal(pending.phase, 'draw'); assert.equal(pending.word, null);
+  assert.equal(pending.players.filter(player => player.score === 1).length, 5);
+  assert.ok(pending.guesses.every(guess => guess.text !== word));
+  tickClassic(state, now + 30000); room.broadcastState(id => classicView(state, id));
+  assert.equal(guests[4].sent.at(-1).state.phase, 'reveal');
+  assert.equal(guests[4].sent.at(-1).state.word, word);
 });

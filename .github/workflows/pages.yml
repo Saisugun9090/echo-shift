@@ -33,6 +33,7 @@ jobs:
           cp bricks.html bricks.css bricks.js bricks-engine.js race.html race.css race.js race-engine.js race-network.js _site/
           cp bumper.html bumper.css bumper.js bumper-engine.js doodle.html doodle.css doodle.js doodle-engine.js room-network.js _site/
           cp bowling.html bowling.css bowling.js bowling-engine.js _site/
+          cp doodle-relay.html doodle-classic.css doodle-classic.js doodle-classic-engine.js _site/
           mkdir _site/vendor
           cp vendor/peerjs.min.js vendor/peerjs.LICENSE _site/vendor/
       - uses: actions/upload-pages-artifact@v3

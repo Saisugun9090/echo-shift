@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#eee9f4"><meta name="description" content="A silly sentence becomes a drawing, then a guess. Play Doodle Relay with 2–6 friends using a shared room code at Sugun Games.">
+  <title>Doodle Relay · Sugun Games</title><link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./doodle.css?v=party-20260916">
+  <link rel="stylesheet" href="./doodle-classic.css?v=classic-20260916">
+</head>
+<body>
+  <header class="masthead"><a class="wordmark" href="./index.html"><span class="brand-mark" aria-hidden="true">sg</span> SUGUN GAMES</a><a class="back-link" href="./index.html">← All games</a></header>
+  <main>
+    <nav class="mode-nav" aria-label="Doodle mode"><a href="./doodle.html">Classic · live guessing</a><a href="./doodle-relay.html" aria-current="page">Relay · drawing telephone</a></nav>
+    <div class="page-heading"><div><p class="eyebrow">PARTY / 2–6 FRIENDS</p><h1>Doodle <em>Relay.</em></h1></div><p class="tagline">Lost in translation.<br><strong>Found in the group chat.</strong></p></div>
+    <div class="layout">
+      <aside class="club-panel">
+        <div class="panel-heading"><span class="eyebrow">THE DOODLE CLUB</span><span class="tiny">01—06</span></div>
+        <div id="setup"><h2>Bring your people.</h2><label for="player-name">Your name</label><input id="player-name" maxlength="18" value="Doodler" autocomplete="nickname" spellcheck="false">
+          <button id="create-room" class="button primary">Create a room <span>↗</span></button>
+          <form id="join-form"><label for="join-code">Already have a code?</label><div class="join-row"><input id="join-code" maxlength="6" placeholder="ABC234" autocomplete="off" autocapitalize="characters" spellcheck="false"><button class="button" type="submit">Join</button></div></form>
+          <p class="note">2–6 players. Best with 4–6. Share a code and keep the host tab open. Some work or school networks block direct game connections.</p>
+        </div>
+        <div id="room-panel" hidden><h2>Your drawing circle.</h2><label for="room-code">SHARE THIS CODE</label><div class="join-row"><input id="room-code" readonly aria-label="Room code"><button id="copy-code" class="button">Copy</button></div><p class="note" id="room-help"></p><ol id="roster" class="roster" aria-label="Players in room"></ol>
+          <button id="start-game" class="button primary" disabled>Start relay <span>→</span></button><button id="leave-room" class="button text-button">Leave room</button>
+        </div>
+        <p id="connection-status" class="status" role="status" aria-live="polite">One room. Six questionable artists.</p>
+        <div class="rules"><h3>THE SHORT VERSION</h3><ol><li>Everyone writes a silly sentence.</li><li>Draw the sentence you receive.</li><li>Guess the next drawing. Repeat.</li><li>Reveal how gloriously it went wrong.</li></ol><p>No points. No talent required.<br>The host moves the group between rounds.</p></div>
+      </aside>
+      <section class="work-area" aria-label="Doodle Relay play area">
+        <div class="desk-header"><span id="phase-label">PASS IT ON</span><strong id="timer" aria-label="Time remaining">✎</strong><span id="round-label">A LITTLE CHAOS, TOGETHER</span></div>
+        <div id="welcome" class="welcome"><div class="sample-paper" aria-hidden="true"><span>A CAT ON A SKATEBOARD</span><svg viewBox="0 0 380 230" fill="none"><path d="M123 162 Q140 134 141 115 L136 72 L160 88 Q185 76 204 85 L228 65 L225 109 Q250 151 229 166 M144 112 L222 110 M161 104 l2 -1 M205 99 l2 -1 M181 120 l9 0 -4 6 -5 -6 M168 143 Q183 153 203 136 M121 180 Q180 192 251 172 M130 183 l-8 15 M239 178 l7 12 M138 202 a7 7 0 1 0 1 0 M223 196 a7 7 0 1 0 1 0 M254 133 q41 -43 39 -8 q-8 16 -36 32" stroke="#696088" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M72 63 l5 -13 5 13 14 5 -14 5 -5 13 -5 -13 -14 -5z M277 45 l3 -8 3 8 9 3 -9 3 -3 8 -3 -8 -9 -3z" fill="#e9b949"/></svg><b>...a very confused pizza delivery?</b></div><h2>Great friends.<br>Terrible drawings.</h2><p>Everyone makes a story. Every pass makes it stranger.<br>Create a room and see where yours ends up.</p><span class="sticker">BAD ART<br>WELCOME ✓</span></div>
+        <div id="play-panel" class="play-panel" hidden>
+          <div class="task-heading"><p class="eyebrow" id="task-kicker">YOUR SECRET TASK</p><h2 id="task-title"></h2><p id="task-help"></p></div>
+          <div id="prompt-card" class="prompt-card" hidden><span>DRAW THIS SENTENCE</span><p id="prompt-text"></p></div>
+          <div id="reference-wrap" class="paper" hidden><canvas id="reference-canvas" width="720" height="480" role="img" aria-label="Drawing to describe"></canvas></div>
+          <form id="answer-form"><div id="text-tools"><label id="answer-label" for="answer">Your sentence</label><input id="answer" maxlength="120" autocomplete="off" spellcheck="true" aria-describedby="answer-note"><div class="answer-meta"><span id="answer-note">Be silly. Keep it friendly.</span><span id="character-count">0 / 120</span></div></div>
+            <div id="drawing-tools" hidden><div class="draw-toolbar"><fieldset id="palette"><legend>Ink colour</legend></fieldset><div class="brush-control"><label for="brush-size">Brush</label><select id="brush-size"><option value="4">Fine</option><option value="9" selected>Medium</option><option value="16">Bold</option></select></div><button id="undo" type="button" class="tool-button">Undo</button><button id="clear" type="button" class="tool-button">Clear</button></div><div class="paper"><canvas id="drawing-canvas" width="720" height="480" tabindex="0" role="img" aria-label="Drawing canvas. Draw with your mouse, finger or pen." aria-describedby="drawing-note"></canvas></div><p id="drawing-note" class="note">Draw with your mouse, finger or pen. Stick figures count. Avoid writing the answer.</p></div>
+            <button id="submit-answer" class="button primary submit-button" type="submit">Pass it on <span>→</span></button></form>
+          <p id="turn-status" class="turn-status" role="status" aria-live="polite"></p>
+          <div id="host-controls" class="host-controls" hidden><button id="next-round" class="button" disabled>Next round →</button><button id="pause" class="button text-button">Pause timer</button></div>
+        </div>
+        <div id="reveal-panel" class="reveal-panel" hidden><p class="eyebrow" id="reveal-kicker"></p><h2 id="reveal-title"></h2><p class="note">From the original idea to the final interpretation. Read it out loud.</p><div id="reveal-chain" class="reveal-chain"></div><button id="next-book" class="button primary">Next story →</button><button id="play-again" class="button">Play again ↻</button><p id="reveal-help" class="note"></p></div>
+        <div id="ended-panel" class="ended-panel" hidden><h2>The relay has ended.</h2><p id="ended-message"></p><button id="new-room" class="button primary">Back to start →</button></div>
+        <div class="desk-footer"><span>DRAW · GUESS · LAUGH · REPEAT</span><span id="progress-label">KEEP THE SURPRISE SECRET</span></div>
+      </section>
+    </div>
+  </main>
+  <footer><span>DOODLE RELAY / SUGUN GAMES</span><a href="https://github.com/Saisugun9090/sugun-games" target="_blank" rel="noopener noreferrer">Source ↗</a></footer>
+  <script src="./vendor/peerjs.min.js"></script><script type="module" src="./doodle.js?v=party-20260916"></script>
+</body>
+</html>
