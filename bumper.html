@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#171b23">
+  <meta name="description" content="Bump, collect stars and laugh with up to six friends. Bumper Bash is a free 90-second browser party game at Sugun Games.">
+  <title>Bumper Bash · Sugun Games</title>
+  <link rel="icon" href="./icon.svg" type="image/svg+xml"><link rel="stylesheet" href="./bumper.css?v=party-20260916">
+</head>
+<body>
+  <header class="masthead"><a class="wordmark" href="./index.html"><span class="brand-mark" aria-hidden="true">sg</span> SUGUN GAMES</a><a class="back-link" href="./index.html">← All games</a></header>
+  <main>
+    <section class="game-heading"><div><p class="eyebrow">PARTY ARCADE / 2–6 FRIENDS</p><h1>Bumper <em>Bash.</em></h1><p class="intro">A little bump. A lot of friendly competition.</p></div><span class="round-badge">90 SECONDS <b>★ EVERY STAR COUNTS</b></span></section>
+    <div class="game-layout">
+      <section class="lounge" aria-label="Game lobby and scores">
+        <div class="panel-heading"><span class="eyebrow">THE HANGOUT</span><span class="number">01—06</span></div>
+        <div id="setup"><h2>Bring your people.</h2><label for="player-name">Your name</label><input id="player-name" maxlength="18" value="Player" autocomplete="nickname" spellcheck="false">
+          <button id="create-room" class="button primary">Create a room <span>↗</span></button>
+          <form id="join-form"><label for="join-code">Have a room code?</label><div class="join-row"><input id="join-code" maxlength="6" placeholder="ABC234" autocomplete="off" autocapitalize="characters" spellcheck="false"><button class="button" type="submit">Join</button></div></form>
+          <div class="separator"><span>just getting warmed up?</span></div><button id="practice" class="button">Solo practice <span>→</span></button>
+          <p class="small-note">2–6 players online. Share a code and keep the host tab open. Some networks may block direct connections.</p>
+        </div>
+        <div id="room-panel" hidden><h2>Your crew.</h2><label for="room-code">SHARE THIS CODE</label><div class="join-row"><input id="room-code" readonly aria-label="Room code"><button id="copy-code" class="button">Copy</button></div><p id="room-help" class="small-note">Waiting for friends…</p><ol id="roster" class="roster" aria-label="Players in room"></ol><button id="start-game" class="button primary" disabled>Start the bash <span>→</span></button><button id="leave-room" class="button text-button">Leave room</button></div>
+        <div id="session-panel" hidden><h2 id="session-title">Star chasers.</h2><ol id="scores" class="roster" aria-label="Scores"></ol><button id="pause-game" class="button">Pause practice</button><button id="rematch" class="button primary" hidden>Play again <span>↻</span></button><button id="back-lobby" class="button text-button">Leave game</button></div>
+        <p id="connection-status" class="status" role="status" aria-live="polite">Create a room, join your friends or try a solo round.</p>
+        <div class="controls-note"><h3>THAT'S THE WHOLE GAME</h3><p><b>Move.</b> Arrow keys, WASD or the direction pad.<br><b>Collect.</b> Every gold star is one point.<br><b>Bump.</b> Nudge rivals away. Nobody gets eliminated.</p><p>Most stars after 90 seconds wins. Ties share the win. <kbd>P</kbd> pauses solo practice.</p></div>
+      </section>
+      <section class="arena" aria-label="Bumper Bash game">
+        <div class="telemetry"><div><span id="mode-label">THE STAR YARD</span><strong>Good times.</strong></div><div class="timer"><span>TIME LEFT</span><strong id="time-left">01:30</strong></div><div class="my-score"><span>YOUR STARS</span><strong id="my-score">0 <small>★</small></strong></div></div>
+        <div class="canvas-wrap"><canvas id="bumper-canvas" width="1200" height="760" tabindex="0" role="img" aria-label="Bumper car arena. Move with arrow keys or WASD to collect stars." aria-describedby="game-status"></canvas><div id="arena-banner" class="arena-banner"><span>WELCOME TO THE STAR YARD</span><strong>Make some room.</strong><p>Bump your friends. Keep the stars.</p></div></div>
+        <div class="arena-footer"><p id="game-status" role="status" aria-live="polite">One point per star. Everyone stays in.</p><span>★ COLLECT & COLLIDE</span></div>
+        <div class="touch-row"><p>Hold a direction.<br><span>Your car has a white ring.</span></p><div class="direction-pad" aria-label="Driving controls"><button data-control="up" aria-label="Move up">↑</button><button data-control="left" aria-label="Move left">←</button><button data-control="down" aria-label="Move down">↓</button><button data-control="right" aria-label="Move right">→</button></div></div>
+      </section>
+    </div>
+  </main>
+  <footer><span>BUMPER BASH / SUGUN GAMES</span><a href="https://github.com/Saisugun9090/sugun-games" target="_blank" rel="noopener noreferrer">Source ↗</a></footer>
+  <script src="./vendor/peerjs.min.js"></script><script type="module" src="./bumper.js?v=party-20260916"></script>
+</body>
+</html>

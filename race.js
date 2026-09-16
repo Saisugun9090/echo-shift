@@ -1,5 +1,5 @@
-import { COLORS, createRace, LAPS, neutralInput, rankCars, stepRace, TRACK, trackPoint, validName } from './race-engine.js';
-import { createRaceRoom } from './race-network.js';
+import { COLORS, createRace, LAPS, MAX_PLAYERS, neutralInput, rankCars, stepRace, TRACK, trackPoint, validName } from './race-engine.js?v=party-20260916';
+import { createRaceRoom } from './race-network.js?v=party-20260916';
 
 const $ = id => document.getElementById(id);
 const canvas = $('race-canvas'), context = canvas.getContext('2d');
@@ -70,7 +70,7 @@ function connect(host) {
       onRoster: drivers => {
         roster = drivers; drawRoster(roster, $('roster'));
         $('start-race').disabled = drivers.length < 2;
-        $('room-help').textContent = `${drivers.length}/4 drivers. ${host ? drivers.length < 2 ? 'Waiting for a friend to join.' : 'Everyone here? Start when you are ready.' : 'The host starts the race.'}`;
+        $('room-help').textContent = `${drivers.length}/${MAX_PLAYERS} drivers. ${host ? drivers.length < 2 ? 'Waiting for a friend to join.' : 'Everyone here? Start when you are ready.' : 'The host starts the race.'}`;
       },
       onStart: initial => beginRace(initial),
       onState: snapshot => { state = snapshot; },

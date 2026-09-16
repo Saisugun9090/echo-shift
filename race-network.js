@@ -1,10 +1,10 @@
-import { validInput, validName, validSnapshot } from './race-engine.js';
+import { MAX_PLAYERS, validInput, validName, validSnapshot } from './race-engine.js?v=party-20260916';
 
-const PREFIX = 'sugun-formula-v1-';
+const PREFIX = 'sugun-formula-v2-';
 const ALPHABET = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';
 export const validCode = code => typeof code === 'string' && /^[A-HJKMNP-Z2-9]{6}$/.test(code);
 const makeCode = () => Array.from(crypto.getRandomValues(new Uint8Array(6)), byte => ALPHABET[byte % ALPHABET.length]).join('');
-const validRoster = roster => Array.isArray(roster) && roster.length >= 1 && roster.length <= 4 && new Set(roster.map(driver => driver?.id)).size === roster.length && roster.every(driver => driver && typeof driver.id === 'string' && driver.id.length <= 100 && validName(driver.name));
+const validRoster = roster => Array.isArray(roster) && roster.length >= 1 && roster.length <= MAX_PLAYERS && new Set(roster.map(driver => driver?.id)).size === roster.length && roster.every(driver => driver && typeof driver.id === 'string' && driver.id.length <= 100 && validName(driver.name));
 
 export function createRaceRoom({ host, name, code, onReady, onRoster, onStart, onState, onInput, onLeave, onError, onStatus }) {
   if (!validName(name)) throw new Error('Enter a driver name using 1–18 characters.');
@@ -32,19 +32,20 @@ export function createRaceRoom({ host, name, code, onReady, onRoster, onStart, o
     connections.clear(); server?.close(); peer.destroy();
   };
   const fail = message => { if (!closed) { close(); onError(message); } };
-  const remove = id => {
+  const remove = (id, expected) => {
     const record = connections.get(id);
-    if (!record || closed) return;
+    if (!record || closed || expected && record !== expected) return;
     connections.delete(id);
     record.connection.close();
     if (!record.ready) return;
     if (started) onLeave(id);
     else { roster = roster.filter(driver => driver.id !== id); publishRoster(); }
   };
-  const reject = (connection, reason) => {
-    send(connection, { type: 'rejected', reason });
+  const reject = (record, reason) => {
+    record.rejected = true;
+    send(record.connection, { type: 'rejected', reason });
     // Give the rejection packet a chance to arrive before the channel is closed.
-    const timer = setTimeout(() => { pendingClose.delete(timer); connection.close(); }, 250);
+    const timer = setTimeout(() => { pendingClose.delete(timer); remove(record.connection.peer, record); }, 250);
     pendingClose.add(timer);
   };
   const deadline = setTimeout(() => fail('Could not open the room. Check the code and connection, then try again. Some work or school networks block game connections.'), 18000);
@@ -89,14 +90,14 @@ export function createRaceRoom({ host, name, code, onReady, onRoster, onStart, o
   peer.on('connection', connection => {
     if (!host || closed) { connection.close(); return; }
     if (typeof connection.peer !== 'string' || !connection.peer.length || connection.peer.length > 100 || connections.size >= 8 || connections.has(connection.peer) || roster.some(driver => driver.id === connection.peer)) { connection.close(); return; }
-    const record = { connection, ready: false, lastSeen: Date.now(), lastInput: 0, sequence: -1 };
+    const record = { connection, ready: false, rejected: false, lastSeen: Date.now(), lastInput: 0, sequence: -1 };
     connections.set(connection.peer, record);
     connection.on('data', message => {
-      if (closed || !message || typeof message !== 'object' || Array.isArray(message)) return;
+      if (closed || connections.get(connection.peer) !== record || record.rejected || !message || typeof message !== 'object' || Array.isArray(message)) return;
       if (message.type === 'hello' && !record.ready) {
-        if (started) { reject(connection, 'This race has already started.'); return; }
-        if (roster.length >= 4) { reject(connection, 'This room is full.'); return; }
-        if (!validName(message.name)) { reject(connection, 'Choose a valid driver name.'); return; }
+        if (started) { reject(record, 'This race has already started.'); return; }
+        if (roster.length >= MAX_PLAYERS) { reject(record, 'This room is full.'); return; }
+        if (!validName(message.name)) { reject(record, 'Choose a valid driver name.'); return; }
         record.ready = true; record.lastSeen = Date.now();
         roster = [...roster, { id: connection.peer, name: message.name.trim() }];
         send(connection, { type: 'welcome', id: connection.peer, roster }); publishRoster();
@@ -105,8 +106,8 @@ export function createRaceRoom({ host, name, code, onReady, onRoster, onStart, o
         record.sequence = message.sequence; record.lastInput = record.lastSeen = Date.now(); onInput(connection.peer, message.input);
       }
     });
-    connection.on('close', () => remove(connection.peer));
-    connection.on('error', () => remove(connection.peer));
+    connection.on('close', () => remove(connection.peer, record));
+    connection.on('error', () => remove(connection.peer, record));
   });
   peer.on('error', error => {
     const messages = {
@@ -124,7 +125,7 @@ export function createRaceRoom({ host, name, code, onReady, onRoster, onStart, o
   });
   return {
     code, host, close,
-    start(state) { if (host && ready && !started && roster.length >= 2 && validSnapshot(state)) { started = true; broadcast({ type: 'start', state }); onStart(state); } },
+    start(state) { if (host && ready && !closed && !started && roster.length >= 2 && validSnapshot(state)) { started = true; broadcast({ type: 'start', state }); onStart(state); } },
     broadcastState(state) { if (host && started) broadcast({ type: 'state', state }); },
     sendInput(input) { if (!host && ready && started && validInput(input)) send(server, { type: 'input', input, sequence: ++inputSequence }); },
   };

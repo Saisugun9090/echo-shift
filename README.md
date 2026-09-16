@@ -1,6 +1,6 @@
 # Sugun Games
 
-Four browser games by Sai Sugun. Pick a game, play with keyboard or touch, and return to the collection using the Sugun Games link.
+Six browser games by Sai Sugun. Pick a game, play with keyboard or touch, and return to the collection using the Sugun Games link. Multiplayer rooms support up to six friends.
 
 **[Play Sugun Games](https://sugungames.vercel.app/)**
 
@@ -8,8 +8,10 @@ Four browser games by Sai Sugun. Pick a game, play with keyboard or touch, and r
 
 | Game | What to play | Players |
 | --- | --- | --- |
+| [Bumper Bash](https://sugungames.vercel.app/bumper.html) | Collect stars and bump friends around the arena in a 90-second match. | 1–6 |
+| [Doodle Relay](https://sugungames.vercel.app/doodle.html) | Write, draw and guess private prompts, then reveal how everyone's story changed. | 2–6 |
 | [Brick Garage](https://sugungames.vercel.app/bricks.html) | Choose a toy-brick chassis, top, wheels and paint. Drive through eight checkpoints before time runs out. | 1 |
-| [Formula Club](https://sugungames.vercel.app/race.html) | Race three laps around Sugun Park. Practise alone or share a room code with friends. | 1–4 |
+| [Formula Club](https://sugungames.vercel.app/race.html) | Race three laps around Sugun Park. Practise alone or share a room code with friends. | 1–6 |
 | [Echo Shift](https://sugungames.vercel.app/echo.html) | Record routes, rewind, and use your echoes to solve five puzzle chambers. | 1 |
 | [Pocket Snake](https://sugungames.vercel.app/snake.html) | Eat apples, grow, and avoid the walls and your tail. | 1 |
 
@@ -17,16 +19,27 @@ Four browser games by Sai Sugun. Pick a game, play with keyboard or touch, and r
 
 1. Open Formula Club, enter a driver name and choose **Create a room**.
 2. Share the six-character code. Friends open the same page, enter the code and choose **Join**.
-3. With 2–4 drivers in the room, the host chooses **Start race**.
+3. With 2–6 drivers in the room, the host chooses **Start race**. A seventh player is told the room is full.
 
 Keep the host's tab visible: hiding it pauses the shared race. Leaving closes the room; return to the lobby to create another. Cars pass through one another. The host runs the race simulation; guests send steering, gas and brake inputs.
 
 Rooms use the bundled [PeerJS 1.5.5](./vendor/README.md) client and public PeerJS signaling/relay services. Players do not need an account. Some work or school networks can block connections; solo practice remains available. These are casual rooms, without ranked matchmaking or an independent game server.
 
+## Party games
+
+Bumper Bash and Doodle Relay have their own **Create a room** and **Join** controls. Share the code with up to five friends on the same game page. The host starts once at least two players have joined. Keep the host tab visible; closing it ends the room.
+
+- **Bumper Bash:** move toward stars and knock other cars away. There is no elimination. Most stars when the 90-second timer ends wins. Solo practice is available.
+- **Doodle Relay:** everyone starts a sentence, then alternates drawing and guessing as books pass around. Submit your turn and wait for the host to advance. The host can advance once everyone is done or time runs out. At the end, reveal each book together. Four to six players creates the most variety, but two can play too.
+
+Doodle sends private per-player tasks during play and only shares completed stories in the reveal. Text and drawings stay in the active room; this site does not save them. Treat the host and room guests as people you trust.
+
 ## Controls
 
 | Game | Controls |
 | --- | --- |
+| Bumper Bash | Arrows / WASD or the on-screen direction buttons. |
+| Doodle Relay | Type sentences and guesses; draw with a mouse, pen or touch. Brush, colour, undo and clear controls are on screen. |
 | Brick Garage | Arrows / WASD: accelerate, steer, brake and reverse. P: pause. On-screen driving buttons also work. |
 | Formula Club | Arrows / WASD: gas, steer and brake. P: pause solo practice. On-screen driving buttons also work. |
 | Echo Shift | Arrows / WASD: move. Space: record and rewind. Period: wait. R: reset. Buttons and adjacent tiles support touch. |
@@ -59,6 +72,8 @@ echo.html   style.css   game.js   engine.js   levels.js
 snake.html  snake.css   snake.js  snake-engine.js
 bricks.html bricks.css  bricks.js bricks-engine.js
 race.html   race.css    race.js   race-engine.js race-network.js
+bumper.html bumper.css bumper.js bumper-engine.js
+doodle.html doodle.css doodle.js doodle-engine.js room-network.js
 vendor/peerjs.min.js    vendor/peerjs.LICENSE
 ```
 
