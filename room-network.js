@@ -10,7 +10,7 @@ const makeCode = () => {
 
 // One host owns the game. Doodle supplies a view per player to keep tasks private.
 export function createRoom({ game, host, name, code, validState, validAction, onReady, onRoster, onStart, onState, onAction, onLeave = () => {}, onError, onStatus = () => {} }) {
-  if (!['bumper', 'doodle'].includes(game)) throw new Error('Unknown game.');
+  if (!['bumper', 'doodle', 'bowling'].includes(game)) throw new Error('Unknown game.');
   if (!validName(name)) throw new Error('Enter a name using 1–18 characters.');
   if (!host && !validCode(code)) throw new Error('Enter the six-character room code.');
   if (!globalThis.Peer) throw new Error('The room service did not load. Refresh the page and try again.');

@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#173455"><meta name="description" content="A little friendly competition at the lanes. Play ten-pin bowling solo or share a room code with six players on Sugun Games.">
+  <title>Pocket Bowl · Sugun Games</title>
+  <link rel="icon" href="./icon.svg" type="image/svg+xml"><link rel="stylesheet" href="./bowling.css?v=bowling-20260916">
+</head>
+<body>
+  <a class="skip-link" href="#play-area">Skip to bowling</a>
+  <header class="masthead"><a class="wordmark" href="./index.html"><span class="brand-mark">SG</span> SUGUN GAMES</a><a class="back-link" href="./index.html">← All games</a></header>
+  <main>
+    <header class="game-heading"><div><p class="eyebrow">TEN-PIN / 1–6 PLAYERS</p><h1>Pocket <em>Bowl.</em></h1><p class="intro">Your lane. Your friends. One more strike.</p></div><div class="ticket"><strong>10</strong><span>FRAMES<br>MAKE IT COUNT</span></div></header>
+    <div class="game-layout">
+      <aside class="lounge" aria-label="Bowling lobby">
+        <p class="eyebrow">THE BOWLING CLUB</p>
+        <div id="setup"><h2>Book your lane.</h2><label for="player-name">Your name</label><input id="player-name" maxlength="18" autocomplete="off" value="Bowler">
+          <button id="create-room" class="button primary">Create a room <span>↗</span></button>
+          <form id="join-form"><label for="join-code">Have a room code?</label><div class="join-row"><input id="join-code" maxlength="6" placeholder="ABC123" autocomplete="off" autocapitalize="characters" spellcheck="false"><button class="button" type="submit">Join</button></div></form>
+          <p class="separator">or find your rhythm</p><button id="practice" class="button">Solo practice <span>→</span></button>
+          <p class="small-note">2–6 players online, including the host. Everyone takes a turn on the same lane.</p>
+        </div>
+        <div id="room-panel" hidden><h2>Your bowling crew.</h2><label for="room-code">Share this code</label><div class="join-row"><input id="room-code" aria-label="Room code" readonly><button id="copy-code" class="button">Copy</button></div><p id="room-help" class="small-note"></p><ul id="roster" class="roster" aria-label="Players in room"></ul><button id="start-game" class="button primary" disabled>Start bowling <span>→</span></button><button id="leave-room" class="button text-button">Leave room</button></div>
+        <div id="session-panel" hidden><p id="mode-label" class="eyebrow"></p><h2 id="turn-title" aria-live="polite">You're up.</h2><p id="turn-detail" class="small-note"></p><ol id="standings" class="roster" aria-label="Standings"></ol><button id="rematch" class="button primary" hidden>Play again <span>↗</span></button><button id="leave-game" class="button text-button">Leave game</button></div>
+        <p id="connection-status" class="status" role="status">Create a room, join your friends or bowl a solo game.</p>
+        <div class="controls-note"><h3>THREE EASY STEPS</h3><p><b>1. Aim.</b> Choose where the ball goes.<br><b>2. Roll.</b> Set power and a little spin.<br><b>3. Cheer.</b> Watch everyone's turn.</p><p>Ten pins. Ten frames. A strike adds your next two rolls; a spare adds your next roll. Bonus rolls finish the tenth frame.</p><p>Keep the host's tab open. Some networks may block direct game connections.</p></div>
+      </aside>
+      <section id="play-area" class="lane-panel" tabindex="-1" aria-label="Bowling lane">
+        <div class="lane-heading"><div><span>LANE 01</span><strong id="lane-title">A good time, rolling.</strong></div><div class="frame-display"><span>FRAME</span><strong id="frame-number">— / 10</strong></div></div>
+        <div class="canvas-wrap"><canvas id="lane" width="900" height="650" role="img" aria-label="Bowling lane with ten pins. Use the aim, power and spin controls below."></canvas><div id="shot-banner" class="shot-banner" aria-hidden="true"><span>WELCOME TO THE CLUB</span><strong>Let's roll.</strong></div></div>
+        <p id="shot-result" class="shot-result" aria-live="polite">Try a solo game or bring your friends.</p>
+        <form id="bowl-form" class="bowl-controls">
+          <div class="sliders"><div><label for="aim">Aim <output id="aim-value" for="aim">Centre</output></label><input id="aim" type="range" min="-100" max="100" value="0" step="1"><div class="range-ends"><span>LEFT</span><span>RIGHT</span></div></div><div><label for="power">Power <output id="power-value" for="power">80%</output></label><input id="power" type="range" min="20" max="100" value="80" step="1"><div class="range-ends"><span>GENTLE</span><span>STRONG</span></div></div><div><label for="spin">Spin <output id="spin-value" for="spin">Straight</output></label><input id="spin" type="range" min="-100" max="100" value="0" step="1"><div class="range-ends"><span>↶ LEFT</span><span>RIGHT ↷</span></div></div></div>
+          <button id="bowl" class="button primary bowl-button" type="submit" disabled>Bowl <span>→</span></button><p id="control-help">Start a game to bowl. Adjust the sliders with a mouse, touch or arrow keys.</p>
+        </form>
+      </section>
+    </div>
+    <section id="score-section" class="score-section" hidden aria-labelledby="score-heading"><div class="score-heading"><h2 id="score-heading">The scorecard.</h2><p>X strike · / spare · – miss · … bonus pending</p></div><div class="score-scroll" tabindex="0" role="region" aria-label="Bowling scores, scroll horizontally on smaller screens"><table><thead><tr><th scope="col">Bowler</th><th scope="col">1</th><th scope="col">2</th><th scope="col">3</th><th scope="col">4</th><th scope="col">5</th><th scope="col">6</th><th scope="col">7</th><th scope="col">8</th><th scope="col">9</th><th scope="col">10</th><th scope="col">Total</th></tr></thead><tbody id="scorecard"></tbody></table></div></section>
+  </main>
+  <footer><span>POCKET BOWL / SUGUN GAMES</span><a href="https://github.com/Saisugun9090/sugun-games" target="_blank" rel="noopener noreferrer">Source ↗</a></footer>
+  <script src="./vendor/peerjs.min.js"></script><script type="module" src="./bowling.js?v=bowling-20260916"></script>
+</body>
+</html>
