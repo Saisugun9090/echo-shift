@@ -87,6 +87,31 @@ test('room names, codes and game namespaces are bounded', () => {
   assert.throws(() => createRoom({ game: 'other', host: true, name: 'Host' }), /Unknown game/);
 });
 
+test('bowling rooms use their own namespace and accept six players but reject a seventh', async t => {
+  const getPeer = fakePeer(t);
+  let roster, started;
+  const room = createRoom({ game: 'bowling', host: true, name: 'Host', validState, validAction,
+    onReady: () => {}, onRoster: value => { roster = value; }, onStart: value => { started = value; },
+    onState: () => {}, onAction: () => {}, onError: assert.fail });
+  t.after(() => room.close());
+  await Promise.resolve();
+  assert.equal(getPeer().id, `sugun-bowling-v1-${room.code}`);
+  const guests = Array.from({ length: 6 }, (_, index) => {
+    const connection = new Connection(`Bowler ${index + 2}`);
+    getPeer().emit('connection', connection);
+    connection.emit('data', { type: 'hello', name: connection.peer });
+    return connection;
+  });
+  assert.equal(roster.length, 6);
+  assert.ok(guests.slice(0, 5).every(connection => connection.sent[0].type === 'welcome'));
+  assert.deepEqual(guests[5].sent, [{ type: 'rejected', reason: 'This room is full.' }]);
+  const state = { for: 'all', task: 'Host bowls first' };
+  room.start(state);
+  assert.deepEqual(started, state);
+  assert.ok(guests.slice(0, 5).every(connection => connection.sent.at(-1).type === 'start'));
+  assert.equal(guests[5].sent.length, 1);
+});
+
 test('old rejected connections cannot close replacements and a closed lobby cannot start', async t => {
   const getPeer = fakePeer(t);
   let roster, starts = 0;
